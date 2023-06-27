@@ -1,0 +1,10 @@
+/* Styling for all product display titles */
+.productDisplayTitle {
+    text-align: center;
+    padding: 5px;
+    margin: 10px;
+    font-size: 30px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+}

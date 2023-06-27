@@ -1,0 +1,10 @@
+/* Styling for the section of the product details where info and button is displayed */
+.productDetailsInfoAndButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 700px;
+    padding: 10px;
+    margin: 10px;
+}

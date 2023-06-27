@@ -1,0 +1,31 @@
+/* Styling for all product card divs */
+.productCard {
+    margin: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(228, 228, 228);
+    width: 200px;
+    padding: 20px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.693);
+    border-radius: 3px;
+}
+
+/* Styling for product card link section */
+.productCardLink {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin: 10px;
+
+    text-decoration: none;
+}
+
+.productCardContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

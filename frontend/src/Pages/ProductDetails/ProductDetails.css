@@ -1,0 +1,61 @@
+/* Styling for the whole product details page */
+.productDetails {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Styling for box displaying details about a product */
+.productDetailsBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(228, 228, 228);
+    padding: 40px;
+    margin: 100px auto;
+    border-radius: 3px;
+}
+
+@media (max-width: 1400px) {
+    .productDetailsInfoAndButton {
+        max-width: 500px;
+    }
+
+    .productDisplayDescription {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .productDetailsInfoAndButton {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .bigProductImage {
+        width: 300px;
+    }
+}
+
+@media (max-width: 900px) {
+    .productDetailsBox {
+        flex-direction: column;
+    }
+
+    .bigProductImage {
+        width: 200px;
+    }
+}
+
+@media (max-width: 500px) {
+    .productDetailsBox {
+        padding: 20px;
+    }
+
+    .productDetailsInfoAndButton {
+        max-width: 200px;
+    }
+}

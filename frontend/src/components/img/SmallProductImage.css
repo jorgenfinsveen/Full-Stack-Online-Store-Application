@@ -1,0 +1,6 @@
+/* Styling for all images for small product entities */
+.smallProductImage {
+    width: 60px;
+    border-radius: 3px;
+    margin: 10px;
+}

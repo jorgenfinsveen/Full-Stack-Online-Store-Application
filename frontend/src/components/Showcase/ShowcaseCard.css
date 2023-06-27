@@ -1,0 +1,142 @@
+/** Showcase Card */
+
+.product-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+
+  padding-bottom: 10rem;
+  padding-top: 5rem;
+  overflow: hidden;
+  z-index: 0;
+
+  border-radius: 5rem;
+}
+
+.productCardLink {
+  text-decoration: none;
+  color: inherit;
+  font-weight: inherit;
+}
+
+.card-container {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  justify-content: center;
+  z-index: 5;
+
+  height: 55rem;
+  width: 32rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 3rem;
+
+  border-radius: 0.3rem;
+  font-size: 3rem;
+  box-shadow: 15px 15px 30px #bebebe, -15px -15px 30px #f7f7f7;
+  transition: 0.4s ease-in-out;
+
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.card-container:hover {
+  transform: translateY(2rem);
+}
+
+.product-image {
+  grid-row: 1;
+  grid-column: 1;
+  z-index: 3;
+
+  height: 32rem;
+  width: 32rem;
+}
+
+.card-info {
+  height: 22rem;
+  width: 32rem;
+  margin-top: 0.5rem;
+
+  display: grid;
+  grid-template-rows: 20% 1fr 30%;
+  justify-content: left;
+  align-items: center;
+}
+
+.card-info > * {
+  margin-left: 2rem;
+  margin-right: auto;
+}
+
+.card-info > h4 {
+  grid-row: 3;
+  grid-column: 1;
+
+  z-index: 2;
+  color: #04402e;
+  font-size: 2rem;
+}
+
+.card-info > p {
+  grid-row: 2;
+  grid-column: 1;
+
+  font-size: 1.4rem;
+  min-height: 3rem;
+  max-width: 26rem;
+}
+
+.card-stats {
+  grid-row: 1;
+  grid-column: 1;
+
+  z-index: 5;
+}
+
+.card-overlay {
+  height: auto;
+  width: auto;
+  z-index: 3;
+  transition: 0.4s ease-in-out;
+  grid-row: 1;
+  grid-column: 1;
+
+  background: linear-gradient(to top, black, transparent 60%);
+  opacity: 0.8;
+}
+
+@media (min-width: 360px) and (max-width: 600px) {
+  .card-container {
+    height: 50rem;
+    width: 28rem;
+  }
+
+  .card-overlay {
+    grid-row: 1;
+    grid-column: 1;
+    z-index: 3;
+
+    height: 28rem;
+    width: 28rem;
+  }
+
+  .product-image {
+    grid-row: 1;
+    grid-column: 1;
+    z-index: 3;
+
+    height: 28rem;
+    width: 28rem;
+  }
+
+  .card-info {
+    width: 28rem;
+    height: 22rem;
+  }
+
+  .product-section > h2 {
+    font-size: 2.8rem;
+  }
+}

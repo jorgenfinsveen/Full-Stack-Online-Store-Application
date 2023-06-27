@@ -1,0 +1,12 @@
+/* Styling for all big price spans */
+.bigPriceSpan {
+    text-align: center;
+    padding: 5px;
+    margin: 10px;
+    height: 60px;
+    font-size: 20px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #032f22;
+}

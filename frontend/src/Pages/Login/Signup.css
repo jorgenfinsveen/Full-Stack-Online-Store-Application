@@ -1,0 +1,108 @@
+/* Sign-up Page*/
+
+.signup-page {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Sign-up Article */
+
+#signup-article {
+  width: 100%;
+  max-width: 65rem;
+}
+
+/* Sign-up Title*/
+
+.signup-title h1 {
+  font-size: 37px;
+  text-align: center;
+  margin-top: 12rem;
+}
+
+/* Sign-up Section */
+
+.signup-section {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.username-field {
+  margin-bottom: 1rem;
+}
+
+.MuiFormControl-root {
+  width: 100%;
+}
+
+/* Email Field */
+.email-field {
+  margin-bottom: 1rem;
+}
+
+/* Sign-up Buttons */
+
+.signup-buttons {
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+#signup-btn-pagesignup {
+  font-size: 15px;
+  margin-left: 3rem;
+  background-color: green;
+}
+
+#login-btn-pagesignup {
+  font-size: 15px;
+  margin-right: 3rem;
+}
+
+/* Strenght Bar */
+
+#signup-article .strength-bar {
+  margin: 8px 0;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 6px;
+  border-radius: 3px;
+  background: #dfe1f0;
+}
+
+#signup-article .strength-bar div {
+  height: 6px;
+  border-radius: 3px;
+  transition: 0.4s;
+  width: 0%;
+}
+
+#signup-article .strength-bar.weak div {
+  background: #e24c71;
+  width: 33.33%;
+}
+
+#signup-article .strength-bar.decent div {
+  background: #f39845;
+  width: 66.66%;
+}
+
+#signup-article .strength-bar.strong div {
+  background: #57c558;
+  width: 100%;
+}
+
+#signup-article #strength-label {
+  text-align: left;
+  height: 30px;
+  text-transform: capitalize;
+  color: #868b94;
+}

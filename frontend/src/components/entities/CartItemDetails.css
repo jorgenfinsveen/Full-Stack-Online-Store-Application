@@ -1,0 +1,9 @@
+/* Styling for the container of image, title and quantity of a product in the cart*/
+.cartItemDetails {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px;
+    width: 300px;
+}

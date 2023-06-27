@@ -1,0 +1,9 @@
+/* Styling for product display descriptions */
+.productDisplayDescription {
+    text-align: center;
+    padding: 5px;
+    margin: 10px;
+    font-size: 15px;
+    letter-spacing: 2px;
+    text-decoration: none;
+}

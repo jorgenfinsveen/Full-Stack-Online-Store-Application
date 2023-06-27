@@ -1,0 +1,72 @@
+#root {
+    background: white;
+}
+
+/* Styling for the cart page */
+.cartPage {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+/* Hides the button for proceeding to payment for small screens, by default */
+#smallScreenProceedCheckoutBtn {
+    display: none;
+}
+
+/* Styling for the cart page when screen has a 1100px width or smaller */
+@media (max-width: 1100px) {
+    .cartPage {
+        flex-direction: column;
+    }
+
+    .cartForm {
+        margin: 60px auto;
+    }
+
+    #cartSectionOnlyItems {
+        display: flex;
+    }
+
+    #bigScreenProceedCheckoutBtn {
+        display: none;
+    }
+
+    #bigScreenCartSection {
+        display: none;
+    }
+
+    #cartSectionFee {
+        display: flex;
+    }
+
+    #smallScreenProceedCheckoutBtn {
+        display: block;
+    }
+}
+
+/* Styling for the cart page when screen has a 750px width or smaller */
+@media (max-width: 750px) {
+    .formInputWrapper {
+        flex-direction: column;
+    }
+}
+
+/* Styling for the cart page when screen has a 500px width or smaller */
+@media (max-width: 500px) {
+    .smallProductImage {
+        width: 30px;
+    }
+
+    .cartItemDetails {
+        flex-direction: column;
+    }
+
+    .cartSection {
+        padding: 10px;
+    }
+
+    .cartForm {
+        min-width: 50px;
+    }
+}

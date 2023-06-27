@@ -1,0 +1,9 @@
+.rating {
+  display: flex;
+  justify-self: center;
+  gap: 1rem;
+}
+
+.rating > i {
+  color: #ffdf00;
+}

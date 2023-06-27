@@ -1,0 +1,27 @@
+/* Styling for the product card grid */
+.productCardGrid {
+    margin: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* Create 3 columns with equal width */
+    grid-gap: 10px;
+    /* Add 10px gap between grid items */
+}
+
+/* Styling for when screen is smaller or equal to 1100px */
+@media (max-width: 1200px) {
+
+    /* Styling for the product card grid */
+    .productCardGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Styling for when screen is smaller or equal to 900px */
+@media (max-width: 900px) {
+
+    /* Styling for the product card grid */
+    .productCardGrid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

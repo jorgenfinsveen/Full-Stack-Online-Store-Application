@@ -1,0 +1,13 @@
+/* Footer styles */
+
+/* Styles for the footer container */
+footer {
+  display: flex;
+  flex-direction: row;
+  background-color: #f7f7f7;
+  padding: 2rem;
+  justify-content: space-around;
+  color: #1c1f22c7;
+  font-size: 12px;
+  letter-spacing: 1px;
+}

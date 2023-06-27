@@ -1,0 +1,85 @@
+/* Login Page */
+
+.login-page {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Login Article */
+
+#login-article {
+  width: 100%;
+  max-width: 65rem;
+}
+
+/* Login Title */
+
+.login-title h1 {
+  font-size: 37px;
+  text-align: center;
+  margin-top: 12rem;
+}
+
+/** Signup title */
+
+#signup-section h2 {
+  font-size: 17px;
+}
+
+/* Login Section */
+
+#login-section li {
+  margin-bottom: 1rem;
+}
+
+#login-section ul {
+  list-style: none;
+  margin-top: 6rem;
+  text-align: center;
+}
+
+#login-article #login-section {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+/* Login Button */
+
+#login-article #login-btn {
+  margin-top: 4rem;
+  background-color: green;
+  align-self: center;
+  font-size: 20px;
+}
+
+/* Form Control */
+
+.MuiFormControl-root input {
+  margin: 0 auto;
+  font-size: 30px;
+}
+
+/* Signup Section */
+
+#signup-section {
+  text-align: center;
+  margin-top: 6rem;
+}
+
+/* Signup Button */
+
+#signup-btn {
+  font-size: 13px;
+  margin-top: 2rem;
+}
+
+/* Form Control Root */
+
+.MuiFormControl-root {
+  width: 70%;
+  margin: 0 auto;
+}

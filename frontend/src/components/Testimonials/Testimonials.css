@@ -1,0 +1,35 @@
+.testimonial-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5rem;
+
+  margin-bottom: 10rem;
+  margin-top: 5rem;
+
+  text-align: center;
+}
+
+.testimonial-section > h2 {
+  color: white;
+}
+
+.testimonial-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  min-height: 30rem;
+
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  .testimonial-section > h2 {
+    font-size: 2.7rem;
+  }
+
+  .testimonial-container {
+    gap: 2rem;
+  }
+}

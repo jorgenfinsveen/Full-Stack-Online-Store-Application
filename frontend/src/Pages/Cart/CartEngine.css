@@ -1,0 +1,6 @@
+/* Styling for the text displayed when the cart is empty*/
+.emptyCartSpan {
+    font-size: 20px;
+    text-align: center;
+    color: rgba(24, 24, 24, 0.809);
+}

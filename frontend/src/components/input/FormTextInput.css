@@ -1,0 +1,11 @@
+/* Styling for all text fields used in forms */
+.formTextInput {
+    margin: 10px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    color: #1d2124;
+    padding: 15px;
+    font-size: 17px;
+    min-width: 20px;
+    font-family: "SoDoSans", sans-serif;
+}

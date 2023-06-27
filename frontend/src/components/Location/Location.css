@@ -1,0 +1,37 @@
+.location-section {
+  display: flex;
+  height: 100%;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 3rem;
+  padding-top: 3rem;
+  margin-bottom: 6rem;
+
+  background: linear-gradient(to right, #087f5b, #032f22);
+  text-align: center;
+}
+
+.location-section > h2 {
+  color: white;
+}
+
+@media (max-width: 1000px) {
+  iframe {
+    height: 60rem;
+    width: 45rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .location-section > h2 {
+    font-size: 2.7rem;
+  }
+
+  iframe {
+    height: 40rem;
+    width: 28rem;
+  }
+}

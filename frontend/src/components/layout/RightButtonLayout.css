@@ -1,0 +1,6 @@
+/* Styling for the RightButtonLayout component */
+.rightButtonLayout {
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+}

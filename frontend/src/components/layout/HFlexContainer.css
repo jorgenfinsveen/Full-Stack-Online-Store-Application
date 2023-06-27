@@ -1,0 +1,4 @@
+.hFlexContainer {
+    display: flex;
+    flex-direction: row;
+}

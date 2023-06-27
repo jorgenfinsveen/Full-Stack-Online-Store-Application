@@ -1,0 +1,8 @@
+/* Styling for all small descriptive texts */
+.smallDescription {
+    border-top: 1px solid #1d2124;
+    padding: 20px;
+    margin: 20px;
+    font-size: 15px;
+    text-align: center;
+}

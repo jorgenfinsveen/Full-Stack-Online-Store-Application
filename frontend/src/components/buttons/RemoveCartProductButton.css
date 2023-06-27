@@ -1,0 +1,13 @@
+/* Styling for all buttons that remove cart products */
+.removeCartProductButton {
+    margin: 10px;
+    border: none;
+    font-size: 15px;
+    padding: 5px;
+    width: 40px;
+}
+
+/* Styling for when mouse is hovering the button */
+.removeCartProductButton:hover {
+    cursor: pointer;
+}

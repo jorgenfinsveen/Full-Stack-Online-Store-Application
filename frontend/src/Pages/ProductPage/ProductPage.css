@@ -1,0 +1,29 @@
+/* Styling for the product page */
+.productPage {
+    margin: 60px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.productCardContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Styling for when screen is smaller or equal to 900px */
+@media (max-width: 900px) {
+
+    /* Styling for the product card */
+    .productCard {
+        margin: 40px 0px;
+    }
+}
+
+/* Styling for when screen is smaller or equal to 500px */
+@media (max-width: 500px) {
+    .addToCartButton {
+        font-size: 12px;
+    }
+}

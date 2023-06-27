@@ -1,0 +1,13 @@
+.product-section {
+  display: grid;
+  grid-template-rows: 8% 1fr;
+  align-items: center;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+
+  background-color: #f7f7f7;
+}
+
+.product-section > h2 {
+  text-align: center;
+}

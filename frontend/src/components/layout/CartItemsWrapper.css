@@ -1,0 +1,12 @@
+/* Styling for cart item wrappers */
+.cartItemsWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 20px;
+}
+
+/* Sets a darker grey as background for all even number of children*/
+.cartItemsWrapper > :nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.032);
+  }

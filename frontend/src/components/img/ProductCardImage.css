@@ -1,0 +1,8 @@
+/* Styling for all images for product cards  */
+.productCardImage {
+    width: 184px;
+    border-radius: 3px;
+    margin: 10px;
+    padding: 5px;
+    margin: 5px;
+}

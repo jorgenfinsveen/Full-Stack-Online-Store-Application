@@ -1,0 +1,8 @@
+/* Styling for all small price spans */
+.smallPriceSpan {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    margin: 10px;
+    font-size: 15px;
+}

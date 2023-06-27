@@ -1,0 +1,46 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### Properties and HTTPS Configs ###
+env.properties
+src/main/resources/keystore/keystore.p12
+<<<<<<< HEAD
+.env
+keystore.p12
+=======
+*.env
+.env
+keystore.p12
+src/main/resources/env.properties
+>>>>>>> debb60910bc1ffdcef60d912986e9bdbf5c7e2b8

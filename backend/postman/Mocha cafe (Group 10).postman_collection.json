@@ -1,0 +1,1959 @@
+{
+	"info": {
+		"_postman_id": "53b8f976-0479-4d92-84bf-735368e5f7dd",
+		"name": "Mocha cafe (Group 10)",
+		"description": "This collection aims to test all operations regarding extracting and being able to modify resources such as products, users and orders.\n\n#### Procedure:\n\n1. Ensure enviroment used is \"Test enviroment (Group 10)\".\n2. Run the \"Authentication\" folder or the collection as a whole to invoke necassary privileges.\n3. Wait for testing to complete.\n4. Evaluate results.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27699954",
+		"_collection_link": "https://ntnu-iir-students.postman.co/workspace/Team-Workspace~8b23436b-0cdb-468a-8652-f57c420e9db8/collection/27687274-53b8f976-0479-4d92-84bf-735368e5f7dd?action=share&creator=27699954&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Autentication",
+			"item": [
+				{
+					"name": "Invoke admin permissons",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var bearerToken = pm.response.headers.get(\"Authorization\");\r",
+									"\r",
+									"pm.environment.set(\"Bearer-token\", bearerToken);\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/login",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This folder invokes admin permissions to be able to test CRUD operations using the API."
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "All products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Non-null values for all resource objects\", function(){\r",
+									"for(var element in pm.response.body){\r",
+									"    pm.expect(element).to.not.be.null;\r",
+									"}\r",
+									"});\r",
+									"\r",
+									"// Track the current number of products\r",
+									"pm.environment.set(\"total-number-of-products\", pm.response.json().length);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/products",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products ordered by: category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Category query parameter matches returned resource's category\",function(){\r",
+									"\r",
+									"    let index = 0\r",
+									"\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"    while(index < jsonData.length){\r",
+									"\r",
+									"        var categoryName = jsonData[index].category.name;\r",
+									"\r",
+									"        var mockCategory = pm.environment.get(\"mock-category\");\r",
+									"\r",
+									"        pm.expect(categoryName).to.be.oneOf([mockCategory, mockCategory.toUpperCase()]);\r",
+									"\r",
+									"        index++;\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var urlPathSegments = pm.request.url.getPathWithQuery().split(\"/\");\r",
+									"\r",
+									"var querySegment = urlPathSegments[urlPathSegments.length - 1];\r",
+									"\r",
+									"var queryParameter = querySegment.split(\"=\")[1];\r",
+									"\r",
+									"pm.environment.set(\"mock-category\", queryParameter);\r",
+									"\r",
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/products/category?category=coffee",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"category"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "coffee"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products ordered by: popularity",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Products returned are in order of popularity\",function(){\r",
+									"    let jsonData = pm.response.json();\r",
+									"\r",
+									"    let index = 0;\r",
+									"\r",
+									"    while(index < jsonData.length - 1){\r",
+									"\r",
+									"        pm.expect(jsonData[index].totalBought).to.be.at.least(jsonData[index + 1].totalBought);\r",
+									"\r",
+									"        index++;\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/products/order?order=popularity",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"order"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "popularity"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Products ordered by: price",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Products returned are in increasing order of price\",function(){\r",
+									"    let jsonData = pm.response.json();\r",
+									"\r",
+									"    let index = 0;\r",
+									"\r",
+									"    while(index < jsonData.length - 1){\r",
+									"\r",
+									"        pm.expect(jsonData[index].price).to.be.at.least(jsonData[index + 1].price);\r",
+									"\r",
+									"        index++;\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/products/order?order=price",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"order"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "price"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add new product",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"imageId\": 0,\r\n  \"name\": {{product-name}},\r\n  \"price\": {{product-price}},\r\n  \"amount\": {{product-amount}},\r\n  \"description\": {{product-desc}},\r\n  \"category\": {{product-category-name}},\r\n  \"display\": true,\r\n  \"totalBought\": 0\r\n}\r\n\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/products",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New product has been created",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"The number of products have been increased by POST request\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"    var numberOfProducts = jsonData.length\r",
+									"\r",
+									"    var previousNumberOfProducts =  pm.environment.get(\"total-number-of-products\")\r",
+									"\r",
+									"    pm.expect(numberOfProducts).to.eql(previousNumberOfProducts + 1);\r",
+									"\r",
+									"    pm.environment.set(\"total-number-of-products\", numberOfProducts);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/products",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Access new product with name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Product name provided matches the name of the requested product\", function () {\r",
+									"\r",
+									"    var productName = pm.environment.get(\"query-product-name\");\r",
+									"\r",
+									"    var responseProductName = pm.response.json().name;\r",
+									"\r",
+									"    pm.expect(productName).to.be.oneOf([responseProductName, responseProductName.toUpperCase()]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"A singular product is returned\"), function(){\r",
+									"    pm.expect(pm.response.json().length).to.eql(1);\r",
+									"}\r",
+									"\r",
+									"// Track the generated product id\r",
+									"pm.environment.set(\"product-id\", pm.response.json().id);\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/products/name?name={{query-product-name}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"name"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "{{query-product-name}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Access new product with ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Product ID provided matches the ID of the requested product\", function () {\r",
+									"\r",
+									"    var urlPathSegments = pm.request.url.getPath().split(\"/\")\r",
+									"\r",
+									"    var lastSegment = Number(urlPathSegments[urlPathSegments.length - 1]);\r",
+									"\r",
+									"    pm.expect(lastSegment).to.eql(pm.response.json().id);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"A singular product is returned\"), function(){\r",
+									"    pm.expect(pm.response.json().length).to.eql(1);\r",
+									"}\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/products/{{product-id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"{{product-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update product contents",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"imageId\": 0,\r\n  \"name\": {{product-name-updated}},\r\n  \"price\": {{product-price}},\r\n  \"amount\": {{product-amount}},\r\n  \"description\": {{product-desc}},\r\n  \"category\": {{product-category-name}},\r\n  \"display\": true,\r\n  \"totalBought\": 0\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/products/{{product-id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"{{product-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New product has been updated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Product name provided matches the name of the requested product\", function () {\r",
+									"\r",
+									"    var updatedProductName = pm.environment.get(\"product-name-updated-regular\");\r",
+									"\r",
+									"    var responseProductName = pm.response.json().name;\r",
+									"\r",
+									"    pm.expect(responseProductName.toUpperCase()).to.eql(updatedProductName.toUpperCase());\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/products/{{product-id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"{{product-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove product",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": {{product-id}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/products/{{product-id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"{{product-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm product is removed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/products/{{product-id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"{{product-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "## Summary\n\nThis test sequence ensures that all operations on products in the form of queires and CRUD operations are working as intended.\n\n## Procedure\n\nThe sequence queries all existing products by all types of available identifiers and ensures that the given products adhere to the parameters given. Additonally all CRUD operations on products are tested.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.collectionVariables.set(\"variable_key\", \"variable_value\");",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Orders and users",
+			"item": [
+				{
+					"name": "Create test user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"uniqueusername\",\r\n  \"password\": \"test\",\r\n  \"email\": \"joergen.finsveen@gmail.com\",\r\n  \"bio\": \"test\",\r\n  \"role\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/users",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Extract user ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Valid user id returned\", function () {\r",
+									"    pm.expect(pm.response.json()).to.not.be.null;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"A singular order is returned\"), function(){\r",
+									"    pm.expect(pm.response.json().length).to.eql(1);\r",
+									"}\r",
+									"\r",
+									"//Tracks the created user ID\r",
+									"pm.environment.set(\"user-id\", pm.response.json());\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/users/{{user-username}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"users",
+								"{{user-username}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add a test product",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"imageId\": {{product-img-static}},\r\n  \"name\": {{product-name}},\r\n  \"price\": {{product-price}},\r\n  \"amount\": {{product-amount}},\r\n  \"description\": {{product-desc}},\r\n  \"category\": {{product-category-name}},\r\n  \"display\": true,\r\n  \"totalBought\": 0\r\n}\r\n\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/products",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Access new product with name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Product name provided matches the name of the requested product\", function () {\r",
+									"\r",
+									"    var productName = pm.environment.get(\"query-product-name\");\r",
+									"\r",
+									"    var responseProductName = pm.response.json().name;\r",
+									"\r",
+									"    pm.expect(productName).to.be.oneOf([responseProductName, responseProductName.toUpperCase()]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"A singular product is returned\"), function(){\r",
+									"    pm.expect(pm.response.json().length).to.eql(1);\r",
+									"}\r",
+									"\r",
+									"// Track the generated product id\r",
+									"pm.environment.set(\"product-id\", pm.response.json().id);\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/products/name?name={{query-product-name}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"name"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "{{query-product-name}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Access new product with ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Product ID provided matches the ID of the requested product\", function () {\r",
+									"\r",
+									"    var urlPathSegments = pm.request.url.getPath().split(\"/\")\r",
+									"\r",
+									"    var lastSegment = Number(urlPathSegments[urlPathSegments.length - 1]);\r",
+									"\r",
+									"    pm.expect(lastSegment).to.eql(pm.response.json().id);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"A singular product is returned\"), function(){\r",
+									"    pm.expect(pm.response.json().length).to.eql(1);\r",
+									"}\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/products/{{product-id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"{{product-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add another test product",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"imageId\": 0,\r\n  \"name\": {{product2-name}},\r\n  \"price\": {{product-price}},\r\n  \"amount\": {{product-amount}},\r\n  \"description\": {{product-desc}},\r\n  \"category\": {{product-category-name}},\r\n  \"display\": true,\r\n  \"totalBought\": 0\r\n}\r\n\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/products",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Access second product with name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Product name provided matches the name of the requested product\", function () {\r",
+									"\r",
+									"    var productName = pm.environment.get(\"query-product2-name\");\r",
+									"\r",
+									"    var responseProductName = pm.response.json().name;\r",
+									"\r",
+									"    pm.expect(productName).to.be.oneOf([responseProductName, responseProductName.toUpperCase()]);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"A singular product is returned\"), function(){\r",
+									"    pm.expect(pm.response.json().length).to.eql(1);\r",
+									"}\r",
+									"\r",
+									"// Track the generated product id\r",
+									"pm.environment.set(\"product2-id\", pm.response.json().id);\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/products/name?name={{query-product2-name}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"name"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "{{query-product2-name}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Access second product with ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Product ID provided matches the ID of the requested product\", function () {\r",
+									"\r",
+									"    var urlPathSegments = pm.request.url.getPath().split(\"/\")\r",
+									"\r",
+									"    var lastSegment = Number(urlPathSegments[urlPathSegments.length - 1]);\r",
+									"\r",
+									"    pm.expect(lastSegment).to.eql(pm.response.json().id);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"A singular product is returned\"), function(){\r",
+									"    pm.expect(pm.response.json().length).to.eql(1);\r",
+									"}\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/products/{{product-id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"{{product-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submit order with test products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"productId\": {{product-id}},\r\n        \"amount\": {{arbituary-number}}\r\n    },\r\n    {\r\n        \"productId\": {{product2-id}},\r\n        \"amount\": {{arbituary-number}}\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/orders/user/{{user-id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"orders",
+								"user",
+								"{{user-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Extract the users order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Order has been created\"), function(){\r",
+									"    pm.expect(pm.response.json().length).to.eql(1);\r",
+									"}\r",
+									"\r",
+									"// Tracks the ID of the created order\r",
+									"pm.environment.set(\"order-id\", pm.response.json()[0].id);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjoiW1JPTEVfVVNFUiwgUk9MRV9BRE1JTl0iLCJleHAiOjE2ODU1MzY3MzZ9.XCiKwZNKGjjphcAPfANrBhagggrd13emMh7isaH1LKo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/orders/user/{{user-id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"orders",
+								"user",
+								"{{user-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update order",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"orderDate\": {{order-date-updated}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/orders/{{order-id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"orders",
+								"{{order-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New order has been updated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Order contents returned matches the updated values \", function () {\r",
+									"\r",
+									"    var updatedOrderDate = pm.environment.get(\"order-date-updated-regular\");\r",
+									"\r",
+									"    var responseOrderDate = pm.response.json()[0].date;\r",
+									"\r",
+									"    pm.expect(responseOrderDate).to.eql(updatedOrderDate);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/orders/user/{{user-id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"orders",
+								"user",
+								"{{user-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove order",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/orders/{{order-id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"orders",
+								"{{order-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm order is removed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Order has been deleted\", function () {\r",
+									"    pm.expect(pm.response.json().length).to.eql(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/orders/user/{{user-id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"orders",
+								"user",
+								"{{user-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/users/{{user-id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"users",
+								"{{user-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm user is removed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/users/{{user-username}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"users",
+								"{{user-username}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove product",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": {{product-id}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/products/{{product-id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"{{product-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm product is removed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/products/{{product-id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"{{product-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove second product",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": {{product-id}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/products/{{product2-id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"{{product2-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm second product is removed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.request.headers.add({\r",
+									"  key: \"Authorization\",\r",
+									"  value: pm.environment.get(\"Bearer-token\")\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/products/{{product2-id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"products",
+								"{{product2-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "## Summary\n\nThis test sequence ensures that all operations on orders, users and carts in the form of CRUD operations are working as intended.\n\n## Procedure\n\nThe sequence creates a user and and two arbituary products in order to simulate an order being submitted. Afterwards any newly introduced resources are removed ensuring the procedure remains idempotent.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base-url",
+			"value": "https://group10.web-tek.ninja:8080"
+		},
+		{
+			"key": "variable_key",
+			"value": ""
+		}
+	]
+}
